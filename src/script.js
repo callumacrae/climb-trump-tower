@@ -11,7 +11,7 @@ if (window.devicePixelRatio > 1.9) {
 }
 
 
-var floors = 68;
+var floors = 80;
 var windowSize = 44;
 var windowOffset = 10;
 
@@ -144,8 +144,8 @@ if (isTouch()) {
 var distanceMoved = 8;
 
 var probabilityScale = d3.scale.linear()
-	.domain([0, 3000])
-	.range([0.04, 0.2])
+	.domain([0, towerHeight])
+	.range([0.04, 0.3])
 	.clamp(true);
 
 var cops = 0;
