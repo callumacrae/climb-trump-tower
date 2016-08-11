@@ -1,3 +1,5 @@
+(function () {
+
 var doc = d3.select('html');
 var body = d3.select('body');
 var svg = d3.select('svg');
@@ -381,3 +383,5 @@ function newCloud() {
 function isTouch() {
 	return ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
 }
+
+})();
