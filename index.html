@@ -4,20 +4,39 @@
 	<meta charset="UTF-8">
 	<title>Climb Trump Tower</title>
 
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Biryani:600,800">
+
 	<style>
 		body {
 			background-color: black;
 		}
 
 		svg {
-			border: 1px white solid;
+			background-color: #e68c8f;
+		}
+
+		svg text {
+			font-family: 'Biryani', sans-serif;
+		}
+
+		.title {
+			font-size: 33pt;
+			letter-spacing: -0.05em;
+			fill: #e9db4b;
+			font-weight: 600;
+		}
+
+		.score {
+			fill: white;
+			font-size: 18pt;
+			font-weight: 600;
 		}
 	</style>
 </head>
 <body>
 	<svg width="500" height="800"></svg>
 
-	<script src="node_modules/d3/build/d3.js"></script>
+	<script src="src/d3.v3.js"></script>
 	<script src="src/script.js"></script>
 </body>
 </html>
