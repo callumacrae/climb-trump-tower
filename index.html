@@ -37,25 +37,6 @@
 			font-weight: 600;
 		}
 
-		.death {
-			fill: white;
-			font-size: 42pt;
-		}
-
-		.death-score {
-			fill: white;
-		}
-
-		.sharing-text {
-			fill: white;
-		}
-
-		.inline-twitter .twitter-share-button {
-			position: absolute !important;
-			left: calc(50% + 35px);
-			top: 330px;
-		}
-
 		.cloud {
 			position: absolute;
 		}
@@ -98,6 +79,37 @@
 			left: calc(50% - 200px);
 		}
 
+		.game-over {
+			position: absolute;
+			top: 200px;
+			left: calc(50% - 200px);
+
+			display: none;
+			width: 400px;
+			height: 200px;
+
+			background-color: rgba(0, 0, 0, 0.8);
+			color: white;
+			border: 5px white solid;
+			border-radius: 15px;
+		}
+
+		.game-over h2 {
+			margin-top: 10px;
+			margin-bottom: -30px;
+			font-size: 42pt;
+		}
+
+		.game-over .twitter {
+			position: absolute;
+			margin-top: -1px;
+			margin-left: 15px;
+		}
+
+		.game-over .share-score {
+			margin-left: -90px;
+		}
+
 		.social {
 			width: 200px;
 			height: 150px;
@@ -121,6 +133,10 @@
 			.social {
 				display: none;
 			}
+
+			.game-over {
+				transform: scale(2);
+			}
 		}
 	</style>
 </head>
@@ -132,6 +148,12 @@
 		<div class="button up">▲</div>
 		<div class="button right">▶</div>
 		<div class="button down">▼</div>
+	</div>
+
+	<div class="game-over">
+		<h2>GAME OVER</h2>
+		<p>You climbed <span class="floors"></span> floors!</p>
+		<p class="share-score">Share your score: <span class="twitter"></span></p>
 	</div>
 
 	<div class="social">

@@ -271,46 +271,14 @@ setInterval(function () {
 }, 150);
 
 function die(floor) {
-	var deathSign = svg.append('g');
-
-	deathSign.append('rect')
-		.attr('width', 400)
-		.attr('height', 200)
-		.attr('x', 50)
-		.attr('y', 200)
-		.attr('rx', 15)
-		.attr('ry', 15)
-		.attr('fill', 'rgba(0, 0, 0, 0.8)')
-		.attr('stroke-width', 5)
-		.attr('stroke', 'white');
-
-	deathSign.append('text')
-		.text('GAME OVER')
-		.attr('x', 250)
-		.attr('text-anchor', 'middle')
-		.attr('y', 270)
-		.attr('class', 'death');
-
-	deathSign.append('text')
-		.text('You climbed ' + floor + ' floors!')
-		.attr('x', 250)
-		.attr('text-anchor', 'middle')
-		.attr('y', 310)
-		.attr('class', 'death-score');
-
-	deathSign.append('text')
-		.text('Share your score:')
-		.attr('x', 140)
-		.attr('y', 350)
-		.attr('class', 'sharing-text');
+	d3.select('.game-over').style('display', 'block')
+	d3.select('.game-over .floors').text(floor);
 
 	d3.select('audio')
 		.attr('src', 'music/gameover.mp3')
 		.attr('loop', null);
 
-	var twitter = body
-		.append('div')
-		.attr('class', 'inline-twitter')
+	var twitter = body.select('.game-over .twitter')
 		.append('a')
 		.attr('href', 'https://twitter.com/share')
 		.attr('class', 'twitter-share-button')
@@ -319,23 +287,14 @@ function die(floor) {
 		.attr('data-url', 'http://climbtrumptower.com/')
 		.attr('data-hashtags', 'TrumpTower')
 		.attr('data-show-count', 'false')
-		.text('Share your score');
+		.text('Tweet');
 
 
 	if (window.ga) {
 		window.ga('send', 'event', 'Game', 'completed', floor);
 	}
 
-
-	twttr.widgets.load()
-		.then(function () {
-			if (window.devicePixelRatio > 1.9) {
-				body.select('.twitter-share-button')
-					.style('top', '850px')
-					.style('left', 'calc(50% - 38px)')
-					.style('transform', 'scale(4)');
-			}
-		})
+	twttr.widgets.load();
 }
 
 
