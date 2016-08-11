@@ -271,7 +271,8 @@ setInterval(function () {
 }, 150);
 
 function die(floor) {
-	d3.select('.game-over').style('display', 'block')
+	d3.select('.game-over').style('display', 'block');
+	d3.select('.game-over-donald').style('display', 'block');
 	d3.select('.game-over .floors').text(floor);
 
 	d3.select('audio')
