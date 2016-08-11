@@ -9,17 +9,14 @@
 	<style>
 		body {
 			margin: 0;
-			background-color: black;
 			text-align: center;
 			background-color: #e68c8f;
+			font-family: 'Biryani', sans-serif;
 		}
 		svg {
 			/* Stupid position hack */
 			opacity: 0.999;
-		}
-
-		svg text {
-			font-family: 'Biryani', sans-serif;
+			max-width: 100%;
 		}
 
 		.title {
@@ -57,10 +54,55 @@
 		.cloud {
 			position: absolute;
 		}
+
+		.button {
+			display: none;
+			position: absolute;
+			width: 400px;
+			height: 400px;
+			background-color: grey;
+			opacity: 0.3;
+			-webkit-transition: opacity 1s;
+			transition: opacity 1s;
+
+			color: white;
+			font-size: 200px;
+		}
+
+		.button.left {
+			top: 450px;
+			padding-top: 100px;
+			height: 700px;
+			left: 0;
+		}
+
+		.button.up {
+			top: 0;
+			left: calc(50% - 200px);
+		}
+
+		.button.right {
+			top: 450px;
+			padding-top: 100px;
+			height: 700px;
+			right: 0;
+		}
+
+		.button.down {
+			bottom: 0;
+			left: calc(50% - 200px);
+		}
 	</style>
 </head>
 <body>
-	<svg width="500" height="800"></svg>
+	<svg width="500" height="800" viewBox="0 0 500 800"></svg>
+
+	<div>
+		<div class="button left">◀</div>
+		<div class="button up">▲</div>
+		<div class="button right">▶</div>
+		<div class="button down">▼</div>
+	</div>
 
 	<audio src="music/playing.mp3" autoplay loop></audio>
 

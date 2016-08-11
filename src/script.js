@@ -4,6 +4,10 @@ var svg = d3.select('svg');
 
 svg.attr('height', Math.max(800, window.innerHeight));
 
+if (window.devicePixelRatio > 1.9) {
+	svg.attr('width', 1000);
+}
+
 
 var floors = 68;
 var windowSize = 44;
@@ -95,6 +99,45 @@ doc
 			}
 		}
 	});
+
+if (isTouch()) {
+	var buttons = d3.selectAll('.button');
+	buttons.style('display', 'block');
+
+	buttons.on('touchstart', function () {
+		d3.event.preventDefault();
+
+		var direction = this.className.split(' ')[1];
+
+		if (direction === 'left') {
+			keysActive[37] = true;
+		} else if (direction === 'up') {
+			keysActive[38] = true;
+		} else if (direction === 'right') {
+			keysActive[39] = true;
+		} else if (direction === 'down') {
+			keysActive[40] = true;
+		}
+
+		if (!active) {
+			active = true;
+			climber.attr('xlink:href', 'imgs/climber.gif');
+		}
+	});
+
+	buttons.on('touchend', function () {
+		keysActive[37] = keysActive[38] = keysActive[39] = keysActive[40] = false;
+
+		if (active) {
+			active = false;
+			climber.attr('xlink:href', 'imgs/climber-still.png');
+		}
+	});
+
+	setTimeout(function () {
+		buttons.style('opacity', '0.1');
+	}, 3000);
+}
 
 var distanceMoved = 8;
 
@@ -247,7 +290,7 @@ function die(floor) {
 		.attr('class', 'death');
 
 	deathSign.append('text')
-		.text('You climbed ' + floor + ' floors')
+		.text('You climbed ' + floor + ' floors!')
 		.attr('x', 250)
 		.attr('text-anchor', 'middle')
 		.attr('y', 310)
@@ -263,7 +306,7 @@ function die(floor) {
 		.attr('src', 'music/gameover.mp3')
 		.attr('loop', null);
 
-	d3.select('body').append('a')
+	var twitter = body.append('a')
 		.attr('href', 'https://twitter.com/share')
 		.attr('class', 'twitter-share-button')
 		.attr('data-size', 'large')
@@ -273,7 +316,17 @@ function die(floor) {
 		.attr('data-show-count', 'false')
 		.text('Share your score');
 
-	twttr.widgets.load();
+
+
+	twttr.widgets.load()
+		.then(function () {
+			if (window.devicePixelRatio > 1.9) {
+				body.select('.twitter-share-button')
+					.style('top', '850px')
+					.style('left', 'calc(50% - 38px)')
+					.style('transform', 'scale(4)');
+			}
+		})
 }
 
 
@@ -323,4 +376,8 @@ function newCloud() {
 	window.requestAnimationFrame(animator);
 
 	return cloud;
+}
+
+function isTouch() {
+	return ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
 }
