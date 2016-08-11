@@ -13,6 +13,11 @@
 			text-align: center;
 			background-color: #e68c8f;
 		}
+		svg {
+			/* Stupid position hack */
+			opacity: 0.999;
+		}
+
 		svg text {
 			font-family: 'Biryani', sans-serif;
 		}
@@ -48,10 +53,16 @@
 			left: calc(50% + 35px);
 			top: 330px;
 		}
+
+		.cloud {
+			position: absolute;
+		}
 	</style>
 </head>
 <body>
 	<svg width="500" height="800"></svg>
+
+	<audio src="music/playing.mp3" autoplay loop></audio>
 
 	<script src="src/d3.v3.js"></script>
 	<script src="src/script.js"></script>

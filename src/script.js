@@ -1,4 +1,5 @@
 var doc = d3.select('html');
+var body = d3.select('body');
 var svg = d3.select('svg');
 
 svg.attr('height', Math.max(800, window.innerHeight));
@@ -135,6 +136,11 @@ setInterval(function () {
 
 	if (heightUpTower > 450) {
 		towerOffset = heightUpTower - 450;
+
+		clouds.forEach(function (cloud) {
+			var startTop = Number(cloud.attr('data-top-start'));
+			cloud.style('top', startTop + towerOffset / 3 + 'px');
+		});
 	}
 
 	if (heightUpTower < 0) {
@@ -253,6 +259,10 @@ function die(floor) {
 		.attr('y', 350)
 		.attr('class', 'sharing-text');
 
+	d3.select('audio')
+		.attr('src', 'music/gameover.mp3')
+		.attr('loop', null);
+
 	d3.select('body').append('a')
 		.attr('href', 'https://twitter.com/share')
 		.attr('class', 'twitter-share-button')
@@ -264,4 +274,53 @@ function die(floor) {
 		.text('Share your score');
 
 	twttr.widgets.load();
+}
+
+
+var clouds = [];
+for (var i = 0; i < 15; i++) {
+	clouds.push(newCloud());
+}
+
+function newCloud() {
+	var randomCloud = Math.floor(Math.random() * 2) + 1;
+	var left = Math.random() * 1600 - 400;
+	var top = Math.random() * 1500 - 1000;
+
+	var cloud = body.insert('img', ':first-child')
+		.attr('src', 'imgs/cloud-' + randomCloud + '.png')
+		.attr('class', 'cloud')
+		.style('width', 200 + Math.random() * 100 + 'px')
+		.style('left', left + 'px')
+		.style('top', top + 'px')
+		.attr('data-top-start', top);
+
+
+	var direction = Math.random() < 0.5 ? 'left' : 'right';
+
+	if (left < 200) {
+		direction = 'right';
+	}
+
+	if (left > 1000) {
+		direction = 'left';
+	}
+
+	var frame = 0;
+
+	function animator() {
+		frame++;
+		window.requestAnimationFrame(animator);
+
+		if (frame % 6 !== 0) {
+			return;
+		}
+
+		left += direction === 'right' ? 0.5 : -0.5;
+		cloud.style('left', left + 'px');
+	}
+
+	window.requestAnimationFrame(animator);
+
+	return cloud;
 }
