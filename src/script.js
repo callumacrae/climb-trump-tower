@@ -12,19 +12,19 @@ var tower = svg.append('g')
 	.attr('transform', 'translate(0, -' + (towerHeight - 660) + ')');
 
 tower.append('rect')
-	.attr('width', 390)
+	.attr('width', 282)
 	.attr('height', towerHeight)
-	.attr('x', 50)
+	.attr('x', 104)
 	.attr('y', 100)
 	.attr('fill', '#585565');
 
-for (var x = 0; x < 7; x++) {
+for (var x = 0; x < 5; x++) {
 	for (var y = 0; y < floors; y++) {
 		tower.append('image')
 			.attr('class', 'x-' + x + '-y-' + y)
 			.attr('width', windowSize)
 			.attr('height', windowSize)
-			.attr('x', x * (windowSize + windowOffset) + 50 + windowOffset)
+			.attr('x', x * (windowSize + windowOffset) + 104 + windowOffset)
 			.attr('y', y * (windowSize + windowOffset) + 100 + windowOffset)
 			.attr('xlink:href', 'imgs/window.png');
 	}
@@ -34,7 +34,8 @@ for (var x = 0; x < 7; x++) {
 
 svg.append('text')
 	.text('CLIMB TRUMP TOWER')
-	.attr('x', 15)
+	.attr('x', 250)
+	.attr('text-anchor', 'middle')
 	.attr('y', 40)
 	.attr('class', 'title');
 
@@ -102,16 +103,24 @@ var probabilityScale = d3.scale.linear()
 var cops = 0;
 var time = Date.now();
 
+var deathPoints = [];
+
+var dead = false;
+
 setInterval(function () {
+	if (dead) {
+		return;
+	}
+
 	if (keysActive[37] || keysActive[39]) {
 		offsetCenter += keysActive[37] ? -distanceMoved : distanceMoved;
 
-		if (offsetCenter > 170) {
-			offsetCenter = 170;
+		if (offsetCenter > 120) {
+			offsetCenter = 120;
 		}
 
-		if (offsetCenter < -170) {
-			offsetCenter = -170;
+		if (offsetCenter < -120) {
+			offsetCenter = -120;
 		}
 	}
 
@@ -130,11 +139,15 @@ setInterval(function () {
 		heightUpTower = 0;
 	}
 
-	climber
-		.attr('x', 219 + offsetCenter)
-		.attr('y', 710 - heightUpTower + towerOffset);
+	var climberX = 219 + offsetCenter;
+	var climberY = 710 - heightUpTower + towerOffset;
 
-	tower.attr('transform', 'translate(0, -' + (towerHeight - 660 - towerOffset) + ')');
+	climber
+		.attr('x', climberX)
+		.attr('y', climberY);
+
+	var translateY = towerHeight - 660 - towerOffset;
+	tower.attr('transform', 'translate(0, -' + translateY + ')');
 
 
 	var floor = d3.scale.linear().domain([0, towerHeight]).range([floors, 0])(heightUpTower);
@@ -148,7 +161,7 @@ setInterval(function () {
 	if (Math.random() < probabilityScale(heightUpTower) || (Date.now() - time > 1000 && !cops)) {
 		cops++;
 		var y = Math.floor(floor - Math.random() * 5 - 2);
-		var x = Math.floor(Math.random() * 7);
+		var x = Math.floor(Math.random() * 5);
 
 		var window = svg.select('.x-' + x + '-y-' + y);
 
@@ -158,6 +171,8 @@ setInterval(function () {
 				.classed('cop', true);
 
 			setTimeout(function () {
+				deathPoints.push(window);
+
 				window.attr('xlink:href', 'imgs/window-cop.gif');
 
 				var x = window.attr('x');
@@ -170,12 +185,57 @@ setInterval(function () {
 					.attr('x', x)
 					.attr('y', y);
 
+				deathPoints.push(glass);
+
 				setInterval(function () {
 					y += 8;
-
 					glass.attr('y', y);
 				}, 150);
 			}, 2000);
 		}
 	}
+
+
+	// Check for collisions
+
+	deathPoints.forEach(function (point) {
+		var pointX = point.attr('x');
+		var pointY = point.attr('y') - translateY;
+
+		var distance = Math.pow(Math.pow(pointX - climberX, 2) + Math.pow(pointY - climberY, 2), 0.5);
+
+		if (distance < 35) {
+			dead = true;
+			die(actualFloor);
+		}
+	});
 }, 150);
+
+function die(floor) {
+	var deathSign = svg.append('g');
+
+	deathSign.append('rect')
+		.attr('width', 400)
+		.attr('height', 200)
+		.attr('x', 50)
+		.attr('y', 200)
+		.attr('rx', 15)
+		.attr('ry', 15)
+		.attr('fill', 'rgba(0, 0, 0, 0.8)')
+		.attr('stroke-width', 5)
+		.attr('stroke', 'white');
+
+	deathSign.append('text')
+		.text('GAME OVER')
+		.attr('x', 250)
+		.attr('text-anchor', 'middle')
+		.attr('y', 270)
+		.attr('class', 'death');
+
+	deathSign.append('text')
+		.text('You climbed ' + floor + ' floors')
+		.attr('x', 250)
+		.attr('text-anchor', 'middle')
+		.attr('y', 300)
+		.attr('class', 'death-score');
+}
