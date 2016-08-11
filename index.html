@@ -8,14 +8,11 @@
 
 	<style>
 		body {
+			margin: 0;
 			background-color: black;
 			text-align: center;
-		}
-
-		svg {
 			background-color: #e68c8f;
 		}
-
 		svg text {
 			font-family: 'Biryani', sans-serif;
 		}
@@ -41,6 +38,16 @@
 		.death-score {
 			fill: white;
 		}
+
+		.sharing-text {
+			fill: white;
+		}
+
+		.twitter-share-button {
+			position: absolute !important;
+			left: calc(50% + 35px);
+			top: 330px;
+		}
 	</style>
 </head>
 <body>
@@ -48,5 +55,7 @@
 
 	<script src="src/d3.v3.js"></script>
 	<script src="src/script.js"></script>
+
+	<script src="https://platform.twitter.com/widgets.js"></script>
 </body>
 </html>

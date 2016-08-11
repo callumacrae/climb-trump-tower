@@ -1,6 +1,8 @@
 var doc = d3.select('html');
 var svg = d3.select('svg');
 
+svg.attr('height', Math.max(800, window.innerHeight));
+
 
 var floors = 68;
 var windowSize = 44;
@@ -36,13 +38,13 @@ svg.append('text')
 	.text('CLIMB TRUMP TOWER')
 	.attr('x', 250)
 	.attr('text-anchor', 'middle')
-	.attr('y', 40)
+	.attr('y', 60)
 	.attr('class', 'title');
 
 var score = svg.append('text')
 	.text('FLOOR 0')
 	.attr('x', 15)
-	.attr('y', 70)
+	.attr('y', 90)
 	.attr('class', 'score');
 
 
@@ -187,9 +189,15 @@ setInterval(function () {
 
 				deathPoints.push(glass);
 
-				setInterval(function () {
+				var interval = setInterval(function () {
 					y += 8;
 					glass.attr('y', y);
+
+					if (y > towerHeight + 64) {
+						clearInterval(interval);
+						deathPoints.splice(deathPoints.indexOf(glass), 1);
+						glass.remove();
+					}
 				}, 150);
 			}, 2000);
 		}
@@ -236,6 +244,24 @@ function die(floor) {
 		.text('You climbed ' + floor + ' floors')
 		.attr('x', 250)
 		.attr('text-anchor', 'middle')
-		.attr('y', 300)
+		.attr('y', 310)
 		.attr('class', 'death-score');
+
+	deathSign.append('text')
+		.text('Share your score:')
+		.attr('x', 140)
+		.attr('y', 350)
+		.attr('class', 'sharing-text');
+
+	d3.select('body').append('a')
+		.attr('href', 'https://twitter.com/share')
+		.attr('class', 'twitter-share-button')
+		.attr('data-size', 'large')
+		.attr('data-text', 'I climbed ' + floor + ' floors up Trump Tower! How far will you get?')
+		.attr('data-url', 'http://climbtrumptower.com/')
+		.attr('data-hashtags', 'TrumpTower')
+		.attr('data-show-count', 'false')
+		.text('Share your score');
+
+	twttr.widgets.load();
 }
