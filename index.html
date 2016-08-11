@@ -95,8 +95,8 @@
 		}
 
 		.game-over h2 {
-			margin-top: 10px;
-			margin-bottom: -30px;
+			margin-top: 8px;
+			margin-bottom: -15px;
 			font-size: 42pt;
 		}
 
@@ -104,6 +104,15 @@
 			position: absolute;
 			margin-top: -1px;
 			margin-left: 15px;
+		}
+
+		.game-over p {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+
+		.game-over > :last-child {
+			margin-top: 10px;
 		}
 
 		.game-over .share-score {
@@ -121,7 +130,7 @@
 			font-weight: 400;
 		}
 
-		.social a {
+		a {
 			color: inherit;
 		}
 
@@ -154,6 +163,7 @@
 		<h2>GAME OVER</h2>
 		<p>You climbed <span class="floors"></span> floors!</p>
 		<p class="share-score">Share your score: <span class="twitter"></span></p>
+		<p><a href="http://climbtrumptower.com/">Click here to replay</a></p>
 	</div>
 
 	<div class="social">
