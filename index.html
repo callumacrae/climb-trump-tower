@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Climb Trump Tower</title>
 
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Biryani:600,800">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Biryani:400,600">
 	<meta name="description" content="See how far you can climb up Trump Tower before NYPD get you!">
 	<meta name="og:description" content="See how far you can climb up Trump Tower before NYPD get you!">
 	<meta name="og:image" content="http://climbtrumptower.com/imgs/og-image.png">
@@ -50,7 +50,7 @@
 			fill: white;
 		}
 
-		.twitter-share-button {
+		.inline-twitter .twitter-share-button {
 			position: absolute !important;
 			left: calc(50% + 35px);
 			top: 330px;
@@ -97,6 +97,31 @@
 			bottom: 0;
 			left: calc(50% - 200px);
 		}
+
+		.social {
+			width: 200px;
+			height: 150px;
+			position: absolute;
+			bottom: 20px;
+			right: 20px;
+
+			color: white;
+			font-weight: 400;
+		}
+
+		.social a {
+			color: inherit;
+		}
+
+		.social .twitter-share-button {
+			float: left;
+		}
+
+		@media screen and (max-width: 800px) {
+			.social {
+				display: none;
+			}
+		}
 	</style>
 </head>
 <body>
@@ -107,6 +132,19 @@
 		<div class="button up">▲</div>
 		<div class="button right">▶</div>
 		<div class="button down">▼</div>
+	</div>
+
+	<div class="social">
+		<p>
+			Code: <a href="https://twitter.com/callumacrae">Callum Macrae</a><br>
+			Graphics: <a href="https://twitter.com/JoeMelhuish">Joe Melhuish</a><br>
+			Music: <a href="https://soundcloud.com/slugabed">Greg Feldwick</a>
+		</p>
+
+		<a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="How far can you climb up Trump Tower?"
+				data-url="http://climbtrumptower.com/" data-hashtags="TrumpTower" data-show-count="true">Share</a>
+
+		<div class="fb-share-button" data-href="http://climbtrumptower.com/" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fclimbtrumptower.com%2F&amp;src=sdkpreparse">Share</a></div>
 	</div>
 
 	<audio src="music/playing.mp3" autoplay loop></audio>
@@ -126,5 +164,14 @@
 		ga('send', 'pageview');
 
 	</script>
+
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.7";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>

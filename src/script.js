@@ -308,7 +308,10 @@ function die(floor) {
 		.attr('src', 'music/gameover.mp3')
 		.attr('loop', null);
 
-	var twitter = body.append('a')
+	var twitter = body
+		.append('div')
+		.attr('class', 'inline-twitter')
+		.append('a')
 		.attr('href', 'https://twitter.com/share')
 		.attr('class', 'twitter-share-button')
 		.attr('data-size', 'large')
