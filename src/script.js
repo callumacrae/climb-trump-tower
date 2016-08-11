@@ -319,6 +319,10 @@ function die(floor) {
 		.text('Share your score');
 
 
+	if (window.ga) {
+		window.ga('send', 'event', 'Game', 'completed', floor);
+	}
+
 
 	twttr.widgets.load()
 		.then(function () {
